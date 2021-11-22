@@ -1,5 +1,6 @@
 package com.gomsk.project.core.domain.entity;
 
+import com.gomsk.project.core.util.Encrypter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +23,10 @@ public class User extends BaseEntity{
         this.email = email;
         this.password = password;
         this.birthday = birthday;
+    }
+
+    //이러한 패턴은 테스트가 편리함
+    public boolean isMatch(Encrypter encrypter, String pw) {
+        return encrypter.isMatch(pw, this.password);
     }
 }

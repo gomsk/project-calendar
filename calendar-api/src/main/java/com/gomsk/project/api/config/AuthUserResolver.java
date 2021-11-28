@@ -1,6 +1,8 @@
 package com.gomsk.project.api.config;
 
 import com.gomsk.project.api.dto.AuthUser;
+import com.gomsk.project.core.exception.CalendarException;
+import com.gomsk.project.core.exception.ErrorCode;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -20,7 +22,7 @@ public class AuthUserResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         final Long userId = (Long) webRequest.getAttribute(LOGIN_SESSION_KEY, webRequest.SCOPE_SESSION);
         if(userId == null){
-            throw new RuntimeException("bad request. no session");
+            throw new CalendarException(ErrorCode.USER_NOT_FOUND);
         }
         return AuthUser.of(userId);
     }

@@ -4,9 +4,11 @@ import com.gomsk.project.core.domain.Event;
 import com.gomsk.project.core.domain.Notification;
 import com.gomsk.project.core.domain.ScheduleType;
 import com.gomsk.project.core.domain.Task;
+import com.gomsk.project.core.util.Period;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder(access = AccessLevel.PACKAGE)
@@ -69,5 +71,9 @@ public class Schedule extends BaseEntity{
 
     public Notification toNotification(){
         return new Notification(this);
+    }
+
+    public boolean isOverlapped(Period period) {
+        return Period.of(getStartAt(), getEndAt()).isOverlapped(period);
     }
 }

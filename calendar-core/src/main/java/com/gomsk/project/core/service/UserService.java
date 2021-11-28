@@ -4,6 +4,8 @@ package com.gomsk.project.core.service;
 import com.gomsk.project.core.domain.entity.User;
 import com.gomsk.project.core.domain.entity.repository.UserRepository;
 import com.gomsk.project.core.dto.UserCreateReq;
+import com.gomsk.project.core.exception.CalendarException;
+import com.gomsk.project.core.exception.ErrorCode;
 import com.gomsk.project.core.util.Encrypter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ public class UserService {
     public User create(UserCreateReq userCreateReq) {
         userRepository.findByEmail(userCreateReq.getEmail())
                 .ifPresent(x -> {
-                   throw new RuntimeException("user already existed!");
+                   throw new CalendarException(ErrorCode.ALREADY_EXISTS_USER);
                 });
 
         return userRepository.save(new User(
@@ -41,6 +43,6 @@ public class UserService {
     @Transactional
     public User findByUserId(Long userId){
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("no user by id."));
+                .orElseThrow(() -> new CalendarException(ErrorCode.USER_NOT_FOUND));
     }
 }

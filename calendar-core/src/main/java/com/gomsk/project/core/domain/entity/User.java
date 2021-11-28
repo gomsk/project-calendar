@@ -1,6 +1,7 @@
 package com.gomsk.project.core.domain.entity;
 
 import com.gomsk.project.core.util.Encrypter;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
+@Builder
 @Getter
 @Table(name ="users")
 @Entity

@@ -37,4 +37,10 @@ public class UserService {
         return userRepository.findByEmail(email)
                 .map(user -> user.isMatch(encrypter,password) ? user : null);
     }
+
+    @Transactional
+    public User findByUserId(Long userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("no user by id."));
+    }
 }

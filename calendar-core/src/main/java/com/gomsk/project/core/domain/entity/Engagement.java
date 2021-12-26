@@ -1,6 +1,7 @@
 package com.gomsk.project.core.domain.entity;
 
 import com.gomsk.project.core.domain.Event;
+import com.gomsk.project.core.domain.RequestReplyType;
 import com.gomsk.project.core.domain.RequestStatus;
 import com.gomsk.project.core.util.Period;
 import lombok.AllArgsConstructor;
@@ -36,5 +37,17 @@ public class Engagement extends BaseEntity{
 
     public boolean isOverlapped(Period period) {
         return this.schedule.isOverlapped(period);
+    }
+
+    public Engagement reply(RequestReplyType type) {
+        switch(type){
+            case ACCEPT:
+                this.requestStatus = RequestStatus.ACCEPTED;
+                break;
+            case REJECT:
+                this.requestStatus = RequestStatus.REJECTED;
+                break;
+        }
+        return this;
     }
 }
